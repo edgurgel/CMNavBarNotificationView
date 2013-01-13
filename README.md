@@ -1,7 +1,7 @@
 CMNavBarNotificationView
 ==================
 
-An in-app notification view above the navigation bar "TOTALLY" based on CMNavBarNotificationView. Compatible with iOS 4.3 and above.
+An in-app notification view above the navigation bar "TOTALLY" based on [MPNotificationView](https://github.com/Moped/MPNotificationView). Compatible with iOS 4.3 and above.
 
 ###Features:
 
@@ -15,7 +15,7 @@ An in-app notification view above the navigation bar "TOTALLY" based on CMNavBar
 Simply use the following call to show a message and related detail text:
 
 ````
-    [CMNavBarNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew for the jovial queen"];`
+    [CMNavBarNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew"];`
 ````
 
 Or use the following call to add a thumbnail image and customize duration:
@@ -53,13 +53,6 @@ Touch handling can be implemented using blocks:
 
 Also by specifying a delegate which implements the `CMNavBarNotificationViewDelegate` and finally by handling the `kCMNavBarNotificationViewTapReceivedNotification` notification.
 
-###Contact:
-
-Developed by [Engin Kurutepe](https://www.twitter.com/engintepe) at [Moped](http://www.moped.com) in [Berlin](http://goo.gl/maps/Ivk0B)
-
-Follow us on twitter: [@moped](https://www.twitter.com/moped)
-
-
 ###Thanks:
 
 Thanks to [ekurutepe](https://github.com/ekurutepe) for the MPNotificationView project. This is totally based on it.
@@ -67,7 +60,6 @@ Thanks to [ekurutepe](https://github.com/ekurutepe) for the MPNotificationView p
 ###License:
 
 Copyright (c) 2013 Eduardo Pinho - Codeminer42
-Copyright (c) 2013 Engin Kurutepe - Moped Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
