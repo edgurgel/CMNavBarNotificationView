@@ -17,12 +17,15 @@
 
 static CGRect notificationRect()
 {
+    CGFloat statusBarHeight = 20.0f;
+    if ([UIApplication sharedApplication].statusBarHidden)
+        statusBarHeight = 0.0f;
     if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
     {
-        return CGRectMake(20.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
+        return CGRectMake(statusBarHeight, 0.0f, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
     }
     
-    return CGRectMake(0.0f, 20.0f, [UIScreen mainScreen].bounds.size.width, kCMNavBarNotificationHeight);
+    return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.width, kCMNavBarNotificationHeight);
 }
 
 NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotificationViewTapReceivedNotification";
