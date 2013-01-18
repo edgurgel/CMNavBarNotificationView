@@ -20,9 +20,10 @@ static CGRect notificationRect()
     CGFloat statusBarHeight = 20.0f;
     if ([UIApplication sharedApplication].statusBarHidden)
         statusBarHeight = 0.0f;
-    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
+    if(UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
-        return CGRectMake(statusBarHeight, 0.0f, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
+        
+        return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
     }
     
     return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.width, kCMNavBarNotificationHeight);
@@ -118,7 +119,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
             frame.size.width = kCMNavBarNotificationIPadWidth;
         }
         
-        if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown)
+        if ([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationPortraitUpsideDown)
         {
             frame.origin.y = [UIScreen mainScreen].bounds.size.height - kCMNavBarNotificationHeight;
             self.transform = CGAffineTransformMakeRotation(RADIANS(180.0f));
@@ -138,7 +139,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
             frame.size.height = kCMNavBarNotificationIPadWidth;
         }
         
-        if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft)
+        if ([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft)
         {
             frame.origin.x = [UIScreen mainScreen].bounds.size.width - frame.size.width;
             self.transform = CGAffineTransformMakeRotation(RADIANS(90.0f));
@@ -314,7 +315,6 @@ static CGFloat const __imagePadding = 8.0f;
         __notificationWindow = [[CMNavBarNotificationWindow alloc] initWithFrame:notificationRect()];
         __notificationWindow.hidden = NO;
     }
-    
     CMNavBarNotificationView * notification = [[CMNavBarNotificationView alloc] initWithFrame:__notificationWindow.bounds];
     
     notification.textLabel.text = text;
@@ -458,7 +458,6 @@ static CGFloat const __imagePadding = 8.0f;
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
-    
     rect = CGRectMake(rect.origin.x * scale, rect.origin.y * scale
                       , rect.size.width * scale, rect.size.height * scale);
     
@@ -468,7 +467,7 @@ static CGFloat const __imagePadding = 8.0f;
                                                orientation:screenshot.imageOrientation];
     CGImageRelease(imageRef);
     
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    UIDeviceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     UIImageOrientation imageOrientation = UIImageOrientationUp;
     
     switch (orientation)
