@@ -69,10 +69,10 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(willRotateScreen:)
-                                                     name:UIApplicationWillChangeStatusBarFrameNotification
+                                                     name:UIApplicationWillChangeStatusBarOrientationNotification
                                                    object:nil];
         
-        [self rotateStatusBarWithFrame:frame];
+        [self rotateStatusBarWithFrame:frame andOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
     
     return self;
@@ -80,26 +80,27 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 
 - (void) willRotateScreen:(NSNotification *)notification
 {
+    UIInterfaceOrientation orientation = [[notification.userInfo valueForKey:UIApplicationStatusBarOrientationUserInfoKey] integerValue];
     CGRect notificationBarFrame = notificationRect();
     
     if (self.hidden)
     {
-        [self rotateStatusBarWithFrame:notificationBarFrame];
+        [self rotateStatusBarWithFrame:notificationBarFrame andOrientation:orientation];
     }
     else
     {
-        [self rotateStatusBarAnimatedWithFrame:notificationBarFrame];
+        [self rotateStatusBarAnimatedWithFrame:notificationBarFrame andOrientation:orientation];
     }
 }
 
-- (void) rotateStatusBarAnimatedWithFrame:(CGRect)frame
+- (void) rotateStatusBarAnimatedWithFrame:(CGRect)frame andOrientation:(UIInterfaceOrientation)orientation
 {
     CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
     [UIView animateWithDuration:duration
                      animations:^{
                          self.alpha = 0;
                      } completion:^(BOOL finished) {
-                         [self rotateStatusBarWithFrame:frame];
+                         [self rotateStatusBarWithFrame:frame andOrientation:orientation];
                          [UIView animateWithDuration:duration
                                           animations:^{
                                               self.alpha = 1;
@@ -108,10 +109,12 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 }
 
 
-- (void) rotateStatusBarWithFrame:(CGRect)frame
+- (void) rotateStatusBarWithFrame:(CGRect)frame andOrientation:(UIInterfaceOrientation)orientation
 {
-    BOOL isPortrait = (frame.size.width == [UIScreen mainScreen].bounds.size.width);
-    
+    BOOL isPortrait = UIDeviceOrientationIsPortrait(orientation);
+    CGFloat statusBarHeight = 20.0f;
+    if ([UIApplication sharedApplication].statusBarHidden)
+        statusBarHeight = 0.0f;
     if (isPortrait)
     {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -119,7 +122,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
             frame.size.width = kCMNavBarNotificationIPadWidth;
         }
         
-        if ([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationPortraitUpsideDown)
+        if (orientation == UIDeviceOrientationPortraitUpsideDown)
         {
             frame.origin.y = [UIScreen mainScreen].bounds.size.height - kCMNavBarNotificationHeight;
             self.transform = CGAffineTransformMakeRotation(RADIANS(180.0f));
@@ -139,13 +142,14 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
             frame.size.height = kCMNavBarNotificationIPadWidth;
         }
         
-        if ([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft)
+        if (orientation == UIInterfaceOrientationLandscapeRight)
         {
-            frame.origin.x = [UIScreen mainScreen].bounds.size.width - frame.size.width;
+            frame.origin.x = [UIScreen mainScreen].bounds.size.width - frame.size.width - statusBarHeight;
             self.transform = CGAffineTransformMakeRotation(RADIANS(90.0f));
         }
         else
         {
+            frame.origin.x = frame.origin.x + statusBarHeight;
             self.transform = CGAffineTransformMakeRotation(RADIANS(-90.0f));
         }
     }
@@ -312,10 +316,12 @@ static CGFloat const __imagePadding = 8.0f;
 {
     if (__notificationWindow == nil)
     {
-        __notificationWindow = [[CMNavBarNotificationWindow alloc] initWithFrame:notificationRect()];
+        CGRect frame = notificationRect();
+        __notificationWindow = [[CMNavBarNotificationWindow alloc] initWithFrame:frame];
         __notificationWindow.hidden = NO;
     }
-    CMNavBarNotificationView * notification = [[CMNavBarNotificationView alloc] initWithFrame:__notificationWindow.bounds];
+    CGRect bounds = __notificationWindow.bounds;
+    CMNavBarNotificationView * notification = [[CMNavBarNotificationView alloc] initWithFrame:bounds];
     
     notification.textLabel.text = text;
     notification.detailTextLabel.text = detail;
@@ -363,7 +369,8 @@ static CGFloat const __imagePadding = 8.0f;
 + (void) showNextNotification
 {
     UIView *viewToRotateOut = nil;
-    UIImage *screenshot = [self screenImageWithRect:__notificationWindow.frame];
+    CGRect frame = __notificationWindow.frame;
+    UIImage *screenshot = [self screenImageWithRect:frame];
     
     if (__notificationWindow.currentNotification)
     {
