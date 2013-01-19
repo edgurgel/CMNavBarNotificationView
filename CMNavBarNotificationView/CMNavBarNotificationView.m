@@ -15,20 +15,6 @@
 #define kCMNavBarNotificationIPadWidth 480.0f
 #define RADIANS(deg) ((deg) * M_PI / 180.0f)
 
-static CGRect notificationRect()
-{
-    CGFloat statusBarHeight = 20.0f;
-    if ([UIApplication sharedApplication].statusBarHidden)
-        statusBarHeight = 0.0f;
-    if(UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-    {
-        
-        return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
-    }
-    
-    return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.width, kCMNavBarNotificationHeight);
-}
-
 NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotificationViewTapReceivedNotification";
 
 #pragma mark CMNavBarNotificationWindow
@@ -41,6 +27,20 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 @end
 
 @implementation CMNavBarNotificationWindow
+
++ (CGRect) notificationRectWithOrientation:(UIInterfaceOrientation)orientation
+{
+    CGFloat statusBarHeight = 20.0f;
+    if ([UIApplication sharedApplication].statusBarHidden)
+        statusBarHeight = 0.0f;
+    if(UIDeviceOrientationIsLandscape(orientation))
+    {
+        
+        return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
+    }
+    
+    return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.width, kCMNavBarNotificationHeight);
+}
 
 - (void) dealloc
 {
@@ -81,7 +81,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 - (void) willRotateScreen:(NSNotification *)notification
 {
     UIInterfaceOrientation orientation = [[notification.userInfo valueForKey:UIApplicationStatusBarOrientationUserInfoKey] integerValue];
-    CGRect notificationBarFrame = notificationRect();
+    CGRect notificationBarFrame = [CMNavBarNotificationWindow notificationRectWithOrientation:orientation];
     
     if (self.hidden)
     {
@@ -205,7 +205,8 @@ static CGFloat const __imagePadding = 8.0f;
     self = [super initWithFrame:frame];
     if (self)
     {
-        CGFloat notificationWidth = notificationRect().size.width;
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        CGFloat notificationWidth = [CMNavBarNotificationWindow notificationRectWithOrientation:orientation].size.width;
         
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
@@ -316,7 +317,8 @@ static CGFloat const __imagePadding = 8.0f;
 {
     if (__notificationWindow == nil)
     {
-        CGRect frame = notificationRect();
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        CGRect frame = [CMNavBarNotificationWindow notificationRectWithOrientation:orientation];
         __notificationWindow = [[CMNavBarNotificationWindow alloc] initWithFrame:frame];
         __notificationWindow.hidden = NO;
     }
