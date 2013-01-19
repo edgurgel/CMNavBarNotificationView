@@ -33,7 +33,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
     CGFloat statusBarHeight = 20.0f;
     if ([UIApplication sharedApplication].statusBarHidden)
         statusBarHeight = 0.0f;
-    if(UIDeviceOrientationIsLandscape(orientation))
+    if (UIDeviceOrientationIsLandscape(orientation))
     {
         
         return CGRectMake(0.0f, statusBarHeight, [UIScreen mainScreen].bounds.size.height, kCMNavBarNotificationHeight);
