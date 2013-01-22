@@ -124,7 +124,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
         
         if (orientation == UIDeviceOrientationPortraitUpsideDown)
         {
-            frame.origin.y = [UIScreen mainScreen].bounds.size.height - kCMNavBarNotificationHeight;
+            frame.origin.y = [UIScreen mainScreen].bounds.size.height - kCMNavBarNotificationHeight - statusBarHeight;
             self.transform = CGAffineTransformMakeRotation(RADIANS(180.0f));
         }
         else
