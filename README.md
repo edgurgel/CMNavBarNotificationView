@@ -45,6 +45,18 @@ Or if you need to load the image async using `AFNetworking`:
 
 ````
 
+If you would like to set a background image:
+
+````
+	[CMNavBarNotificationView setBackgroundImage:[UIImage imageNamed:@"aImage"]];
+    [CMNavBarNotificationView notifyWithText:@"Moped Dog:"
+                                detail:@"I have no idea what I'm doing..."
+                                 image:nil
+                           andDuration:5.0];
+
+
+````
+
 Touch handling can be implemented using blocks:
 
 ````

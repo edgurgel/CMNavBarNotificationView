@@ -49,10 +49,15 @@
 -(IBAction) enqueueNotification2:(id)sender
 {
 
-    [CMNavBarNotificationView notifyWithText:@"Moped Dog:"
-                                detail:@"I have no idea what I'm doing..."
-                                 image:[UIImage imageNamed:@"mopedDog.jpeg"]
-                           andDuration:5.0];
+    [CMNavBarNotificationView setBackgroundImage:[UIImage imageNamed:@"bg_navbar"]];
+    CMNavBarNotificationView *notification = [CMNavBarNotificationView notifyWithText:@"Moped Dog:"
+                                                                               detail:@"I have no idea what I'm doing..."
+                                                                                image:[UIImage imageNamed:@"mopedDog.jpeg"]
+                                                                          andDuration:5.0];
+    notification.textLabel.textColor = [UIColor redColor];
+    notification.textLabel.backgroundColor = [UIColor clearColor];
+    notification.detailTextLabel.textColor = [UIColor whiteColor];
+    notification.detailTextLabel.backgroundColor = [UIColor clearColor];
 }
 
 -(IBAction) enqueueNotification3:(id)sender

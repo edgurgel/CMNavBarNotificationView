@@ -23,6 +23,8 @@
 		870D5D3816971F1500AB84FB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D3716971F1500AB84FB /* LICENSE */; };
 		870D5D3A1697238000AB84FB /* mopedDog.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D391697238000AB84FB /* mopedDog.jpeg */; };
 		A912ED42169DA20B0016A254 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A912ED41169DA20B0016A254 /* MainViewController.xib */; };
+		C64FBC2516C0657B00E57799 /* bg_navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = C64FBC2316C0657B00E57799 /* bg_navbar.png */; };
+		C64FBC2616C0657B00E57799 /* bg_navbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C64FBC2416C0657B00E57799 /* bg_navbar@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		870D5D3716971F1500AB84FB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		870D5D391697238000AB84FB /* mopedDog.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mopedDog.jpeg; sourceTree = "<group>"; };
 		A912ED41169DA20B0016A254 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		C64FBC2316C0657B00E57799 /* bg_navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_navbar.png; sourceTree = "<group>"; };
+		C64FBC2416C0657B00E57799 /* bg_navbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_navbar@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,13 +111,14 @@
 				870D5D151696DA5A00AB84FB /* CMViewController.m */,
 				870D5D001696DA5A00AB84FB /* Supporting Files */,
 			);
-			name = CMNavBarNotificationViewTest;
 			path = CMNavBarNotificationViewTest;
 			sourceTree = "<group>";
 		};
 		870D5D001696DA5A00AB84FB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C64FBC2316C0657B00E57799 /* bg_navbar.png */,
+				C64FBC2416C0657B00E57799 /* bg_navbar@2x.png */,
 				870D5D391697238000AB84FB /* mopedDog.jpeg */,
 				870D5D011696DA5A00AB84FB /* CMNavBarNotificationViewTest-Info.plist */,
 				870D5D021696DA5A00AB84FB /* InfoPlist.strings */,
@@ -132,7 +137,6 @@
 				870D5D211696DA9E00AB84FB /* CMNavBarNotificationView.h */,
 				870D5D221696DA9E00AB84FB /* CMNavBarNotificationView.m */,
 			);
-			name = CMNavBarNotificationView;
 			path = CMNavBarNotificationView;
 			sourceTree = "<group>";
 		};
@@ -173,7 +177,7 @@
 			attributes = {
 				CLASSPREFIX = CM;
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = "Codeminer42";
+				ORGANIZATIONNAME = Codeminer42;
 			};
 			buildConfigurationList = 870D5CEF1696DA5A00AB84FB /* Build configuration list for PBXProject "CMNavBarNotificationViewTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -204,6 +208,8 @@
 				870D5D3816971F1500AB84FB /* LICENSE in Resources */,
 				870D5D3A1697238000AB84FB /* mopedDog.jpeg in Resources */,
 				A912ED42169DA20B0016A254 /* MainViewController.xib in Resources */,
+				C64FBC2516C0657B00E57799 /* bg_navbar.png in Resources */,
+				C64FBC2616C0657B00E57799 /* bg_navbar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
