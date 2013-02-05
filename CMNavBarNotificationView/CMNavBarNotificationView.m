@@ -172,6 +172,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 
 static CMNavBarNotificationWindow * __notificationWindow = nil;
 static CGFloat const __imagePadding = 8.0f;
+static UIImage * __backgroundImage = nil;
 
 #pragma mark -
 #pragma mark CMNavBarNotificationView
@@ -188,10 +189,21 @@ static CGFloat const __imagePadding = 8.0f;
 
 @implementation CMNavBarNotificationView
 
++ (void)setBackgroundImage:(UIImage *)image
+{
+    __backgroundImage = image;
+}
+
 - (void) setBackgroundColor:(UIColor *)color
 {
-    _contentView.colors = @[(id)[color CGColor],
-                            (id)[color CGColor]];
+    UIView *contentView = _contentView;
+    if ([contentView isKindOfClass:[OBGradientView class]]) {
+        OBGradientView *gradientView = (OBGradientView *) _contentView;
+        gradientView.colors = @[(id)[color CGColor],
+                                (id)[color CGColor]];
+    } else {
+        [contentView setBackgroundColor:color];
+    }
 }
 
 - (void) dealloc
@@ -210,9 +222,19 @@ static CGFloat const __imagePadding = 8.0f;
         
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        _contentView = [[OBGradientView alloc] initWithFrame:self.bounds];
-        _contentView.colors = @[(id)[[UIColor colorWithWhite:0.99f alpha:1.0f] CGColor],
-                                (id)[[UIColor colorWithWhite:0.9f  alpha:1.0f] CGColor]];
+        if (__backgroundImage) {
+            
+            _contentView = [[UIView alloc] initWithFrame:self.bounds];
+            [_contentView setBackgroundColor:[UIColor colorWithPatternImage:__backgroundImage]];
+            
+        } else {
+            
+            OBGradientView *gradientView = [[OBGradientView alloc] initWithFrame:self.bounds];
+            gradientView.colors = @[(id)[[UIColor colorWithWhite:0.99f alpha:1.0f] CGColor],
+                                    (id)[[UIColor colorWithWhite:0.9f  alpha:1.0f] CGColor]];
+            _contentView = gradientView;
+            
+        }
         
         _contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _contentView.layer.cornerRadius = 0.0f;

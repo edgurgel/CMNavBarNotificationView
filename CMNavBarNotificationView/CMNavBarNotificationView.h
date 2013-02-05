@@ -21,7 +21,7 @@ typedef void (^CMNotificationSimpleAction)(id);
 @property (nonatomic, strong) UILabel *detailTextLabel;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) id<CMNavBarNotificationViewDelegate> delegate;
-@property (nonatomic, strong) OBGradientView * contentView;
+@property (nonatomic, strong) UIView * contentView;
 
 @property (nonatomic) NSTimeInterval duration;
 
@@ -52,6 +52,7 @@ typedef void (^CMNotificationSimpleAction)(id);
                                  detail:(NSString*)detail
                           andTouchBlock:(CMNotificationSimpleAction)block;
 
++ (void) setBackgroundImage:(UIImage *)image;
 - (void) setBackgroundColor:(UIColor *)color;
 
 @end
