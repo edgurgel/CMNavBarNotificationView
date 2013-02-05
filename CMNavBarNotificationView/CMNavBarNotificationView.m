@@ -196,9 +196,14 @@ static UIImage * __backgroundImage = nil;
 
 - (void) setBackgroundColor:(UIColor *)color
 {
-    OBGradientView *gradientView = (OBGradientView *) _contentView;
-    gradientView.colors = @[(id)[color CGColor],
-                            (id)[color CGColor]];
+    UIView *contentView = _contentView;
+    if ([contentView isKindOfClass:[OBGradientView class]]) {
+        OBGradientView *gradientView = (OBGradientView *) _contentView;
+        gradientView.colors = @[(id)[color CGColor],
+                                (id)[color CGColor]];
+    } else {
+        [contentView setBackgroundColor:color];
+    }
 }
 
 - (void) dealloc
