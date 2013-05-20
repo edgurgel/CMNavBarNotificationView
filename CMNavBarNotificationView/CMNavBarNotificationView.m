@@ -44,6 +44,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 
 - (void) dealloc
 {
+    [super dealloc];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -208,6 +209,7 @@ static UIImage * __backgroundImage = nil;
 
 - (void) dealloc
 {
+    [super dealloc];
     _delegate = nil;
     [self removeGestureRecognizer:_tapGestureRecognizer];
 }
@@ -375,7 +377,7 @@ static UIImage * __backgroundImage = nil;
         _tapBlock(self);
     }
     
-    if ([_delegate respondsToSelector:@selector(tapReceivedForNotificationView:)])
+    if ([_delegate respondsToSelector:@selector(didTapOnNotificationView:)])
     {
         [_delegate didTapOnNotificationView:self];
     }
