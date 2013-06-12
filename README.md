@@ -10,9 +10,9 @@ An in-app notification view above the navigation bar "TOTALLY" based on [MPNotif
 - Simple API
 - Enqueues multiple notifications and shows them with a default duration of 2 seconds.
 
-###Screenshot:
+###Live:
 
-![Example](http://dl.dropbox.com/u/1128017/CMNotificationViewTest.png)
+![Example](http://dl.dropboxusercontent.com/u/1128017/cmnavbar.gif)
 
 ###Usage:
 
