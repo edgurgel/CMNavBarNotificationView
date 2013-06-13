@@ -18,53 +18,52 @@ An in-app notification view above the navigation bar "TOTALLY" based on [MPNotif
 
 Simply use the following call to show a message and related detail text:
 
-````
-    [CMNavBarNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew"];`
+```objective-c
+[CMNavBarNotificationView notifyWithText:@"Grumpy wizards" andDetail:@"make a toxic brew"];`
 ````
 
 Or use the following call to add a thumbnail image and customize duration:
 
-````
-    [CMNavBarNotificationView notifyWithText:@"Moped Dog:"
-                                detail:@"I have no idea what I'm doing..."
-                                 image:[UIImage imageNamed:@"mopedDog.jpeg"]
-                           andDuration:5.0];
+```objective-c
+[CMNavBarNotificationView notifyWithText:@"Moped Dog:"
+                        detail:@"I have no idea what I'm doing..."
+                         image:[UIImage imageNamed:@"mopedDog.jpeg"]
+                   andDuration:5.0];
 ````
 
 Or if you need to load the image async using `AFNetworking`:
 
-````
-    CMNavBarNotificationView* notification =
-    [CMNavBarNotificationView notifyWithText:@"Moped Dog:"
-                                detail:@"I have no idea what I'm doing..."
-                                 image:nil
-                           andDuration:5.0];
+```objective-c
+CMNavBarNotificationView* notification =
+[CMNavBarNotificationView notifyWithText:@"Moped Dog:"
+                        detail:@"I have no idea what I'm doing..."
+                         image:nil
+                   andDuration:5.0];
 
-    //From UIImage+AFNetworking.h:
-    [notification.imageView setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
+//From UIImage+AFNetworking.h:
+[notification.imageView setImageWithURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/361895/mopeddog.png"]];
 
 ````
 
 If you would like to set a background image:
 
-````
-	[CMNavBarNotificationView setBackgroundImage:[UIImage imageNamed:@"aImage"]];
-    [CMNavBarNotificationView notifyWithText:@"Moped Dog:"
-                                detail:@"I have no idea what I'm doing..."
-                                 image:nil
-                           andDuration:5.0];
-
+```objective-c
+[CMNavBarNotificationView setBackgroundImage:[UIImage imageNamed:@"aImage"]];
+[CMNavBarNotificationView notifyWithText:@"Moped Dog:"
+                        detail:@"I have no idea what I'm doing..."
+                         image:nil
+                   andDuration:5.0];
 
 ````
 
 Touch handling can be implemented using blocks:
 
-````
-    [CMNavBarNotificationView notifyWithText:@"Grumpy wizards"
-                                detail:@"make a toxic brew for the jovial queen"
-                         andTouchBlock:^(CMNavBarNotificationView *notificationView) {
-                             NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
-    }];
+```objective-c
+[CMNavBarNotificationView notifyWithText:@"Grumpy wizards"
+                        detail:@"make a toxic brew for the jovial queen"
+                 andTouchBlock:^(CMNavBarNotificationView *notificationView) {
+                     NSLog( @"Received touch for notification with text: %@", notificationView.textLabel.text );
+}];
 ````
 
 Also by specifying a delegate which implements the `CMNavBarNotificationViewDelegate` and finally by handling the `kCMNavBarNotificationViewTapReceivedNotification` notification.
