@@ -18,7 +18,6 @@
 		870D5D101696DA5A00AB84FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D0F1696DA5A00AB84FB /* Default-568h@2x.png */; };
 		870D5D161696DA5A00AB84FB /* CMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870D5D151696DA5A00AB84FB /* CMViewController.m */; };
 		870D5D231696DA9E00AB84FB /* CMNavBarNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870D5D221696DA9E00AB84FB /* CMNavBarNotificationView.m */; };
-		870D5D281696DC9400AB84FB /* OBGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870D5D271696DC9400AB84FB /* OBGradientView.m */; };
 		870D5D2A1696DD3400AB84FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870D5D291696DD3400AB84FB /* QuartzCore.framework */; };
 		870D5D3816971F1500AB84FB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D3716971F1500AB84FB /* LICENSE */; };
 		870D5D3A1697238000AB84FB /* mopedDog.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 870D5D391697238000AB84FB /* mopedDog.jpeg */; };
@@ -45,8 +44,6 @@
 		870D5D151696DA5A00AB84FB /* CMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMViewController.m; sourceTree = "<group>"; };
 		870D5D211696DA9E00AB84FB /* CMNavBarNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNavBarNotificationView.h; sourceTree = "<group>"; };
 		870D5D221696DA9E00AB84FB /* CMNavBarNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavBarNotificationView.m; sourceTree = "<group>"; };
-		870D5D261696DC9400AB84FB /* OBGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBGradientView.h; sourceTree = "<group>"; };
-		870D5D271696DC9400AB84FB /* OBGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBGradientView.m; sourceTree = "<group>"; };
 		870D5D291696DD3400AB84FB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		870D5D3716971F1500AB84FB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		870D5D391697238000AB84FB /* mopedDog.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mopedDog.jpeg; sourceTree = "<group>"; };
@@ -75,7 +72,6 @@
 			children = (
 				870D5D3716971F1500AB84FB /* LICENSE */,
 				870D5D291696DD3400AB84FB /* QuartzCore.framework */,
-				870D5D251696DC9400AB84FB /* OBGradientView */,
 				870D5D201696DA9E00AB84FB /* CMNavBarNotificationView */,
 				870D5CFF1696DA5A00AB84FB /* CMNavBarNotificationViewTest */,
 				870D5CF81696DA5A00AB84FB /* Frameworks */,
@@ -138,15 +134,6 @@
 				870D5D221696DA9E00AB84FB /* CMNavBarNotificationView.m */,
 			);
 			path = CMNavBarNotificationView;
-			sourceTree = "<group>";
-		};
-		870D5D251696DC9400AB84FB /* OBGradientView */ = {
-			isa = PBXGroup;
-			children = (
-				870D5D261696DC9400AB84FB /* OBGradientView.h */,
-				870D5D271696DC9400AB84FB /* OBGradientView.m */,
-			);
-			path = OBGradientView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,7 +211,6 @@
 				870D5D0A1696DA5A00AB84FB /* CMAppDelegate.m in Sources */,
 				870D5D161696DA5A00AB84FB /* CMViewController.m in Sources */,
 				870D5D231696DA9E00AB84FB /* CMNavBarNotificationView.m in Sources */,
-				870D5D281696DC9400AB84FB /* OBGradientView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +250,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -285,7 +271,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -298,7 +284,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CMNavBarNotificationViewTest/CMNavBarNotificationViewTest-Prefix.pch";
 				INFOPLIST_FILE = "CMNavBarNotificationViewTest/CMNavBarNotificationViewTest-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = CMNavBarNotificationViewTest;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -311,7 +297,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CMNavBarNotificationViewTest/CMNavBarNotificationViewTest-Prefix.pch";
 				INFOPLIST_FILE = "CMNavBarNotificationViewTest/CMNavBarNotificationViewTest-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = CMNavBarNotificationViewTest;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
