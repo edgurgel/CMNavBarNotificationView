@@ -13,6 +13,7 @@
 
 #define kCMNavBarNotificationHeight 44.0f
 #define kCMNavBarNotificationIPadWidth 480.0f
+#define kCMNavBarNotificationDuration 2.0f
 #define RADIANS(deg) ((deg) * M_PI / 180.0f)
 
 NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotificationViewTapReceivedNotification";
@@ -29,7 +30,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 @implementation CMNavBarNotificationWindow
 
 + (CGRect)notificationRectWithOrientation:(UIInterfaceOrientation)orientation {
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = MIN(UIApplication.sharedApplication.statusBarFrame.size.width, UIApplication.sharedApplication.statusBarFrame.size.height);
     if ([UIApplication sharedApplication].statusBarHidden) statusBarHeight = 0.0f;
     if (UIDeviceOrientationIsLandscape(orientation)) {
         
@@ -53,18 +54,6 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
         self.windowLevel = UIWindowLevelStatusBar + 1;
         self.backgroundColor = [UIColor clearColor];
         _notificationQueue = [[NSMutableArray alloc] initWithCapacity:4];
-        
-        UIView *topHalfBlackView = [[UIView alloc]
-                                    initWithFrame:CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame),
-                                                             CGRectGetWidth(frame),
-                                                             0.5 * CGRectGetHeight(frame))];
-        
-        topHalfBlackView.backgroundColor = [UIColor blackColor];
-        topHalfBlackView.layer.zPosition = -100;
-        topHalfBlackView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        [self addSubview:topHalfBlackView];
         
         [[NSNotificationCenter defaultCenter]
          addObserver:self
@@ -110,7 +99,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 
 - (void)rotateStatusBarWithFrame:(CGRect)frame andOrientation:(UIInterfaceOrientation)orientation {
     BOOL isPortrait = UIDeviceOrientationIsPortrait(orientation);
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = MIN(UIApplication.sharedApplication.statusBarFrame.size.width, UIApplication.sharedApplication.statusBarFrame.size.height);
     if ([UIApplication sharedApplication].statusBarHidden) statusBarHeight = 0.0f;
     if (isPortrait) {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -259,7 +248,7 @@ static UIImage *__backgroundImage = nil;
 }
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text andDetail:(NSString *)detail {
-    return [self notifyWithText:text detail:detail andDuration:2.0f];
+    return [self notifyWithText:text detail:detail andDuration:kCMNavBarNotificationDuration];
 }
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail andDuration:(NSTimeInterval)duration {
@@ -287,7 +276,7 @@ static UIImage *__backgroundImage = nil;
     return [self notifyWithText:text
                          detail:detail
                           image:nil
-                       duration:2.0
+                       duration:kCMNavBarNotificationDuration
                   andTouchBlock:block];
 }
 
