@@ -281,15 +281,16 @@ static UIImage *__backgroundImage = nil;
 }
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image duration:(NSTimeInterval)duration andTouchBlock:(CMNotificationSimpleAction)block {
+    UIInterfaceOrientation orientation =
+    [UIApplication sharedApplication].statusBarOrientation;
+    CGRect frame = [CMNavBarNotificationWindow
+                    notificationRectWithOrientation:orientation];
     if (__notificationWindow == nil) {
-        UIInterfaceOrientation orientation =
-        [UIApplication sharedApplication].statusBarOrientation;
-        CGRect frame = [CMNavBarNotificationWindow
-                        notificationRectWithOrientation:orientation];
         __notificationWindow =
         [[CMNavBarNotificationWindow alloc] initWithFrame:frame];
         __notificationWindow.hidden = NO;
     }
+    __notificationWindow.frame = frame;
     CGRect bounds = __notificationWindow.bounds;
     CMNavBarNotificationView *notification =
     [[CMNavBarNotificationView alloc] initWithFrame:bounds];
