@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "CMNavBarNotificationView"
-  s.version      = "1.0.4"
+  s.version      = "1.0.5"
   s.summary      = "An in-app notification view above the navigation bar totally based on MPNotificationView."
   s.homepage     = "https://github.com/edgurgel/CMNavBarNotificationView"
   s.license      = 'MIT'
