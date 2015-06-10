@@ -57,6 +57,8 @@ typedef void (^CMNotificationSimpleAction)(id);
                                       detail:(NSString *)detail
                                andTouchBlock:(CMNotificationSimpleAction)block;
 
++ (void)setStatusBarStyle:(UIStatusBarStyle)barStyle;
++ (void)setHidesStatusBar:(BOOL)hidesStatusBar;
 + (void)setBackgroundImage:(UIImage *)image;
 - (void)setBackgroundColor:(UIColor *)color;
 - (void)setTextColor:(UIColor *)color;
