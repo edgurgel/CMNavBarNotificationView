@@ -18,6 +18,35 @@
 
 NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotificationViewTapReceivedNotification";
 
+#pragma mark CMNavBarViewController
+
+@interface CMNavBarViewController : UIViewController
+
+@property (nonatomic) UIStatusBarStyle barStyle;
+@property (nonatomic) BOOL hidesStatusBar;
+
+@end
+
+@implementation CMNavBarViewController
+
+- (instancetype)initWithStatusBarStyle:(UIStatusBarStyle)barStyle hidesStatusBar:(BOOL)hidesStatusBar {
+    if (self = [super init]) {
+        _barStyle = barStyle;
+        _hidesStatusBar = hidesStatusBar;
+    }
+    return self;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.barStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.hidesStatusBar;
+}
+
+@end
+
 #pragma mark CMNavBarNotificationWindow
 
 @interface CMNavBarNotificationWindow : UIWindow
@@ -48,7 +77,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame statusBarStyle:(UIStatusBarStyle)barStyle hidesStatusBar:(BOOL)hidesStatusBar {
     self = [super initWithFrame:frame];
     if (self) {
         self.windowLevel = UIWindowLevelStatusBar + 1;
@@ -65,6 +94,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
          rotateStatusBarWithFrame:frame
          andOrientation:
          [[UIApplication sharedApplication] statusBarOrientation]];
+        self.rootViewController = [[CMNavBarViewController alloc] initWithStatusBarStyle:barStyle hidesStatusBar:hidesStatusBar];
     }
     
     return self;
@@ -146,6 +176,8 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 static CMNavBarNotificationWindow *__notificationWindow = nil;
 static CGFloat const __imagePadding = 8.0f;
 static UIImage *__backgroundImage = nil;
+static UIStatusBarStyle __barStyle = UIStatusBarStyleDefault;
+static BOOL __hidesStatusBar = NO;
 
 #pragma mark -
 #pragma mark CMNavBarNotificationView
@@ -161,6 +193,14 @@ static UIImage *__backgroundImage = nil;
 @end
 
 @implementation CMNavBarNotificationView
+
++ (void)setHidesStatusBar:(BOOL)hidesStatusBar {
+    __hidesStatusBar = hidesStatusBar;
+}
+
++ (void)setStatusBarStyle:(UIStatusBarStyle)barStyle {
+    __barStyle = barStyle;
+}
 
 + (void)setBackgroundImage:(UIImage *)image {
     __backgroundImage = image;
@@ -286,8 +326,7 @@ static UIImage *__backgroundImage = nil;
     CGRect frame = [CMNavBarNotificationWindow
                     notificationRectWithOrientation:orientation];
     if (__notificationWindow == nil) {
-        __notificationWindow =
-        [[CMNavBarNotificationWindow alloc] initWithFrame:frame];
+        __notificationWindow = [[CMNavBarNotificationWindow alloc] initWithFrame:frame statusBarStyle:__barStyle hidesStatusBar:__hidesStatusBar];
         __notificationWindow.hidden = NO;
     }
     __notificationWindow.frame = frame;
