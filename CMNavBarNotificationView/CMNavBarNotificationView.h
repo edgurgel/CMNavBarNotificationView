@@ -51,6 +51,12 @@ typedef void (^CMNotificationSimpleAction)(id);
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text
                                       detail:(NSString *)detail
                                     duration:(NSTimeInterval)duration
+                       supportedOrientations:(UIInterfaceOrientationMask)orientations
+                               andTouchBlock:(CMNotificationSimpleAction)block;
+
++ (CMNavBarNotificationView *)notifyWithText:(NSString *)text
+                                      detail:(NSString *)detail
+                                    duration:(NSTimeInterval)duration
                                andTouchBlock:(CMNotificationSimpleAction)block;
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text
