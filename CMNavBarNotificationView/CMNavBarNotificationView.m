@@ -18,6 +18,40 @@
 
 NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotificationViewTapReceivedNotification";
 
+#pragma mark CMNavBarViewController
+
+@interface CMNavBarViewController : UIViewController
+
+@property (nonatomic) UIStatusBarStyle barStyle;
+@property (nonatomic) UIInterfaceOrientationMask supportedOrientations;
+@property (nonatomic) BOOL hidesStatusBar;
+
+@end
+
+@implementation CMNavBarViewController
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return self.supportedOrientations;
+}
+
+- (instancetype)initWithStatusBarStyle:(UIStatusBarStyle)barStyle hidesStatusBar:(BOOL)hidesStatusBar {
+    if (self = [super init]) {
+        _barStyle = barStyle;
+        _hidesStatusBar = hidesStatusBar;
+    }
+    return self;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.barStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.hidesStatusBar;
+}
+
+@end
+
 #pragma mark CMNavBarNotificationWindow
 
 @interface CMNavBarNotificationWindow : UIWindow
@@ -35,12 +69,12 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
     if (UIDeviceOrientationIsLandscape(orientation)) {
         
         return CGRectMake(0.0f, statusBarHeight,
-                          [UIScreen mainScreen].bounds.size.height,
+                          MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height),
                           kCMNavBarNotificationHeight);
     }
     
     return CGRectMake(0.0f, statusBarHeight,
-                      [UIScreen mainScreen].bounds.size.width,
+                      MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height),
                       kCMNavBarNotificationHeight);
 }
 
@@ -48,7 +82,7 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame statusBarStyle:(UIStatusBarStyle)barStyle hidesStatusBar:(BOOL)hidesStatusBar {
     self = [super initWithFrame:frame];
     if (self) {
         self.windowLevel = UIWindowLevelStatusBar + 1;
@@ -65,9 +99,18 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
          rotateStatusBarWithFrame:frame
          andOrientation:
          [[UIApplication sharedApplication] statusBarOrientation]];
+        self.rootViewController = [[CMNavBarViewController alloc] initWithStatusBarStyle:barStyle hidesStatusBar:hidesStatusBar];
     }
     
     return self;
+}
+
+- (void)setSupportedOrientations:(UIInterfaceOrientationMask)supportedOrientations {
+    CMNavBarViewController *navBarViewController = (CMNavBarViewController *)self.rootViewController;
+    if(![navBarViewController isKindOfClass:[CMNavBarViewController class]]) {
+        return;
+    }
+    navBarViewController.supportedOrientations = supportedOrientations;
 }
 
 - (void)willRotateScreen:(NSNotification *)notification {
@@ -146,6 +189,8 @@ NSString *kCMNavBarNotificationViewTapReceivedNotification = @"kCMNavBarNotifica
 static CMNavBarNotificationWindow *__notificationWindow = nil;
 static CGFloat const __imagePadding = 8.0f;
 static UIImage *__backgroundImage = nil;
+static UIStatusBarStyle __barStyle = UIStatusBarStyleDefault;
+static BOOL __hidesStatusBar = NO;
 
 #pragma mark -
 #pragma mark CMNavBarNotificationView
@@ -161,6 +206,14 @@ static UIImage *__backgroundImage = nil;
 @end
 
 @implementation CMNavBarNotificationView
+
++ (void)setHidesStatusBar:(BOOL)hidesStatusBar {
+    __hidesStatusBar = hidesStatusBar;
+}
+
++ (void)setStatusBarStyle:(UIStatusBarStyle)barStyle {
+    __barStyle = barStyle;
+}
 
 + (void)setBackgroundImage:(UIImage *)image {
     __backgroundImage = image;
@@ -252,7 +305,6 @@ static UIImage *__backgroundImage = nil;
 }
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail andDuration:(NSTimeInterval)duration {
-    return
     [self notifyWithText:text detail:detail image:nil andDuration:duration];
 }
 
@@ -261,7 +313,17 @@ static UIImage *__backgroundImage = nil;
                          detail:detail
                           image:image
                        duration:duration
+          supportedOrientations:UIInterfaceOrientationMaskAll
                   andTouchBlock:nil];
+}
+
++ (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail duration:(NSTimeInterval)duration supportedOrientations:(UIInterfaceOrientationMask)orientations andTouchBlock:(CMNotificationSimpleAction)block {
+    return [self notifyWithText:text
+                         detail:detail
+                          image:nil
+                       duration:duration
+          supportedOrientations:orientations
+                  andTouchBlock:block];
 }
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail duration:(NSTimeInterval)duration andTouchBlock:(CMNotificationSimpleAction)block {
@@ -269,6 +331,7 @@ static UIImage *__backgroundImage = nil;
                          detail:detail
                           image:nil
                        duration:duration
+          supportedOrientations:UIInterfaceOrientationMaskAll
                   andTouchBlock:block];
 }
 
@@ -277,19 +340,21 @@ static UIImage *__backgroundImage = nil;
                          detail:detail
                           image:nil
                        duration:kCMNavBarNotificationDuration
+          supportedOrientations:UIInterfaceOrientationMaskAll
                   andTouchBlock:block];
 }
 
-+ (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image duration:(NSTimeInterval)duration andTouchBlock:(CMNotificationSimpleAction)block {
++ (CMNavBarNotificationView *)notifyWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image duration:(NSTimeInterval)duration supportedOrientations:(UIInterfaceOrientationMask)orientations andTouchBlock:(CMNotificationSimpleAction)block {
+    UIInterfaceOrientation orientation =
+    [UIApplication sharedApplication].statusBarOrientation;
+    CGRect frame = [CMNavBarNotificationWindow
+                    notificationRectWithOrientation:orientation];
     if (__notificationWindow == nil) {
-        UIInterfaceOrientation orientation =
-        [UIApplication sharedApplication].statusBarOrientation;
-        CGRect frame = [CMNavBarNotificationWindow
-                        notificationRectWithOrientation:orientation];
-        __notificationWindow =
-        [[CMNavBarNotificationWindow alloc] initWithFrame:frame];
+        __notificationWindow = [[CMNavBarNotificationWindow alloc] initWithFrame:frame statusBarStyle:__barStyle hidesStatusBar:__hidesStatusBar];
         __notificationWindow.hidden = NO;
     }
+    [__notificationWindow setSupportedOrientations:orientations];
+    __notificationWindow.frame = frame;
     CGRect bounds = __notificationWindow.bounds;
     CMNavBarNotificationView *notification =
     [[CMNavBarNotificationView alloc] initWithFrame:bounds];

@@ -51,12 +51,20 @@ typedef void (^CMNotificationSimpleAction)(id);
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text
                                       detail:(NSString *)detail
                                     duration:(NSTimeInterval)duration
+                       supportedOrientations:(UIInterfaceOrientationMask)orientations
+                               andTouchBlock:(CMNotificationSimpleAction)block;
+
++ (CMNavBarNotificationView *)notifyWithText:(NSString *)text
+                                      detail:(NSString *)detail
+                                    duration:(NSTimeInterval)duration
                                andTouchBlock:(CMNotificationSimpleAction)block;
 
 + (CMNavBarNotificationView *)notifyWithText:(NSString *)text
                                       detail:(NSString *)detail
                                andTouchBlock:(CMNotificationSimpleAction)block;
 
++ (void)setStatusBarStyle:(UIStatusBarStyle)barStyle;
++ (void)setHidesStatusBar:(BOOL)hidesStatusBar;
 + (void)setBackgroundImage:(UIImage *)image;
 - (void)setBackgroundColor:(UIColor *)color;
 - (void)setTextColor:(UIColor *)color;
