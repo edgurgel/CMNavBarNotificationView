@@ -3,18 +3,18 @@ CMNavBarNotificationView
 
 An in-app notification view above the navigation bar "TOTALLY" based on [MPNotificationView](https://github.com/Moped/MPNotificationView). Compatible with iOS 4.3 and above.
 
-###Features:
+### Features:
 
 - Animation and layout similar to iOS 6 notifications
 - Provides two `UILabels` and an `UIImageView`
 - Simple API
 - Enqueues multiple notifications and shows them with a default duration of 2 seconds.
 
-###Live:
+### Live:
 
 ![Example](http://dl.dropboxusercontent.com/u/1128017/cmnavbar.gif)
 
-###Usage:
+### Usage:
 
 Simply use the following call to show a message and related detail text:
 
@@ -68,11 +68,11 @@ Touch handling can be implemented using blocks:
 
 Also by specifying a delegate which implements the `CMNavBarNotificationViewDelegate` and finally by handling the `kCMNavBarNotificationViewTapReceivedNotification` notification.
 
-###Thanks:
+### Thanks:
 
 Thanks to [ekurutepe](https://github.com/ekurutepe) for the MPNotificationView project. This is totally based on it.
 
-###License:
+### License:
 
 Copyright (c) 2013 Eduardo Pinho - Codeminer42
 
